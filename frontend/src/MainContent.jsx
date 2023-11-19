@@ -12,15 +12,21 @@ export default function MainContent(){
     
     const handleClick=async ()=>{
       
-        const data={searchURL:inputText}
+        const data={url:inputText}
+        console.log(data)
 
            
-        axios.post('http://localhost:8000/search', data)
+        axios.post('http://localhost:8000/api/products', data, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
         .then((response) => {   
             setInputText('');            
             const json=response.data;
             if (response.status === 200) {
-                // console.log(json.searchResults);
+                console.log(json);
+
                
             }
             else{
