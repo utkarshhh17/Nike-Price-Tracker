@@ -11,7 +11,7 @@ public class ProductService {
 
     public ProductService() {
         this.products = new ArrayList<>();
-        this.products.add(new Product("a", 1, "AD"));
+        this.products.add(new Product("a", 1, "AD", "Stirnfg"));
     }
 
     public Product createNewProduct(Product product){
@@ -37,6 +37,6 @@ public class ProductService {
                 return p;
             }
         }
-        return new Product("Error", 100, "Errorrrr");
+        return new Product("Error", 100, "Errorrrr", "Snlfsag");
     }
 }
