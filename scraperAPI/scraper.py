@@ -1,6 +1,7 @@
 from requests_html import HTMLSession
 from Product import Product
 from URL import URL
+import re
 
 
 class Scraper:
@@ -18,4 +19,11 @@ class Scraper:
         self.name = self.res.html.find('.headline-2.css-16cqcdq', first=True)
         self.url = url
         self.image_url = self.res.html.find('img.css-viwop1.css-m5dkrx', first=True)
-        return Product(self.name.text, self.price.text, self.url.url, self.image_url.attrs.get('src'))
+
+
+        return Product(self.name.text, self.parse_price(), self.url.url, self.image_url.attrs.get('src'))
+
+    def parse_price(self):
+        return int("".join(re.findall("[0-9]", self.price.text))[:-2])
+
+
