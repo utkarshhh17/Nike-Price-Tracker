@@ -1,13 +1,22 @@
-import Nav from "./Nav";
-import MainContent from "./MainContent";
+import { AnimatePresence } from "framer-motion";
+import { Route, Routes } from "react-router-dom";
+import HomePage from "./Pages/HomePage";
+import ProductPage from "./Pages/Products";
+
 
 function App() {
+  
   return (
-    <div className="App">
-    <Nav />
-    <MainContent />
+    <AnimatePresence>
+      <Routes>
+        <Route path="/" element={<HomePage />} >
+        </Route>
+        <Route path="/products" element={<ProductPage />} >
+        </Route>
 
-    </div>
+
+      </Routes>
+  </AnimatePresence>
   );
 }
 

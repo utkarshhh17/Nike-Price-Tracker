@@ -3,6 +3,9 @@ import axios from 'axios';
 export default function MainContent(){
     const [inputText,setInputText]=useState('');
 
+    const [finalResponse,setFinalResponse]=useState(null);
+
+
 
     function handleChange(event){
         var text=event.target.value;
@@ -34,7 +37,8 @@ export default function MainContent(){
                     const confirmResponse=response.data;
                     if(response.status === 200){
                         // JSON Product Object
-                        console.log(confirmResponse)
+                        console.log(confirmResponse);
+                        setFinalResponse(confirmResponse);
                     }
                     else {
                         console.error('Request failed');
@@ -63,6 +67,12 @@ export default function MainContent(){
 
     return (
         <div className="flex justify-center items-center w-full h-screen bg-slate-400">
+        {finalResponse &&
+            <div className="absolute top-20 w-40 h-10 rounded-sm shadow-lg bg-green-400 text-md text-white flex justify-center items-center">
+            ✓ Succesfully Added
+
+            </div>
+        }
             <div className="w-[30rem] h-80 shadow-md bg-gray-300 flex justify-center flex-col items-center">
                 <h2 className="relative bottom-10 font-bold text-2xl">Enter Nike Product URL</h2>
                 <input onChange={handleChange} value={inputText} className="bg-transparent outline-none left-10 mt-10 mr-10 text h-10 w-60 border-black border-b-[1px] rounded-sm ml-10 small:w-20 small:left-0" placeholder="Enter URL"></input>
