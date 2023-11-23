@@ -39,4 +39,13 @@ public class ProductService {
         }
         return new Product("Error", 100, "Errorrrr", "Snlfsag");
     }
+
+    public Product updateExistingProduct(Product product) {
+        for(Product p : products){
+            if(p.getURL().equals(product.getURL())){
+                p.setPrice(product.getPrice());
+            }
+        }
+        return product;
+    }
 }
