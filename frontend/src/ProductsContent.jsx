@@ -37,33 +37,35 @@ const [productsResponse,setProductsResponse]=useState(null);
         ]
         
 
-    // useEffect(() => {
+    useEffect(() => {
        
 
-    //     axios.get("https://localhost:8081/api/products")
-    //     .then((response) => {
-    //         const confirmResponse=response.data;
-    //         if(response.status === 200){
-    //             // JSON Product Object
-    //             console.log(confirmResponse);
-    //             setProductsResponse(confirmResponse);
-    //         }
-    //         else {
-    //             console.error('Request failed');
-    //         }
-    //     })
-    //     .catch((error)=>{
-    //         console.error(error.response.data.error);
-    //     })
+        axios.get("https://localhost:8081/api/products")
+        .then((response) => {
+            const confirmResponse=response.data;
+            if(response.status === 200){
+                // JSON Product Object
+                console.log(confirmResponse);
+                setProductsResponse(confirmResponse);
+            }
+            else {
+                console.error('Request failed');
+            }
+        })
+        .catch((error)=>{
+            console.error(error.response.data.error);
+        })
        
-    //   }, []);
+      }, []);
     
     
     
     
       return (
         <div className="flex flex-wrap mt-20">
-           {dummyData.map((data,index)=>(
+        {productsResponse && (
+            <div>
+           {productsResponse.map((data,index)=>(
             <div className="flex flex-col justify-center items-center h-auto ml-10 shadow-xl w-60" key={index}>
                 <img src={data.imageURL} className=""></img> 
                 <div className="mt-2 text-lg">{data.name}</div>
@@ -72,6 +74,9 @@ const [productsResponse,setProductsResponse]=useState(null);
 
             </div>
            ))}
+           </div>
+           )
+           }
         </div>
     )
 }
