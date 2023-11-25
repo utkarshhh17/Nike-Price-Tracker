@@ -1,13 +1,14 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 export default function ProductsContent(){
 
 const [productsResponse,setProductsResponse]=useState(null);
 
-    useEffect(() => {
-        // dummy data
-        /*
-        [
+
+ // dummy data
+        
+        const dummyData=[
             {
                 "name": "Nike Air Force 1 Wild",
                 "price": 12795,
@@ -34,32 +35,43 @@ const [productsResponse,setProductsResponse]=useState(null);
             },
 
         ]
-        */
+        
 
-        axios.get("https://localhost:8081/api/products")
-        .then((response) => {
-            const confirmResponse=response.data;
-            if(response.status === 200){
-                // JSON Product Object
-                console.log(confirmResponse);
-                setProductsResponse(confirmResponse);
-            }
-            else {
-                console.error('Request failed');
-            }
-        })
-        .catch((error)=>{
-            console.error(error.response.data.error);
-        })
+    // useEffect(() => {
        
-      }, []);
+
+    //     axios.get("https://localhost:8081/api/products")
+    //     .then((response) => {
+    //         const confirmResponse=response.data;
+    //         if(response.status === 200){
+    //             // JSON Product Object
+    //             console.log(confirmResponse);
+    //             setProductsResponse(confirmResponse);
+    //         }
+    //         else {
+    //             console.error('Request failed');
+    //         }
+    //     })
+    //     .catch((error)=>{
+    //         console.error(error.response.data.error);
+    //     })
+       
+    //   }, []);
     
     
     
     
       return (
-        <div>
-            
+        <div className="flex flex-wrap mt-20">
+           {dummyData.map((data,index)=>(
+            <div className="flex flex-col justify-center items-center h-auto ml-10 shadow-xl w-60" key={index}>
+                <img src={data.imageURL} className=""></img> 
+                <div className="mt-2 text-lg">{data.name}</div>
+                <div className="mt-2 text-sm font-roboto">Price:{data.price}</div>
+                <div className="mt-2 text-lg text-red-400 font-jost mb-2"><Link to={data.url}>Link</Link></div>
+
+            </div>
+           ))}
         </div>
     )
 }
