@@ -6,4 +6,4 @@ class Product:
         self.imageurl = image_url
 
     def __str__(self):
-        return f"Name: {self.name}, Price: {self.price}, URL: {self.url}, ImageURL: {self.imageurl}"
+        return f"name: {self.name}, price: {self.price}, url: {self.url}, imageurl: {self.imageurl}"

@@ -1,5 +1,6 @@
 package com.shreyash.backend.mail;
 
+import com.shreyash.backend.product.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -20,12 +21,20 @@ public class MailService {
     @Value("$(spring.mail.username)")
     private String from;
 
-    public void sendMail(String mailID, MailStructure mailStructure){
+    public boolean isIncreased(Product past, Product current){
+        if (current.getPrice() > past.getPrice()){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void sendMail(MailStructure mailStructure){
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setFrom(from);
         simpleMailMessage.setSubject(mailStructure.getSubject());
         simpleMailMessage.setText(mailStructure.getBody());
-        simpleMailMessage.setTo(mailID);
+        simpleMailMessage.setTo("singhshreyash0075@gmail.com");
         javaMailSender.send(simpleMailMessage);
     }
 }

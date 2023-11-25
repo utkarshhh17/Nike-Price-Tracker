@@ -1,5 +1,5 @@
 package com.shreyash.backend.product;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -8,8 +8,11 @@ import java.util.List;
 @Service
 public class ProductService {
     private List<Product> products;
+    private ProductWebClient productWebClient;
 
-    public ProductService() {
+    @Autowired
+    public ProductService(ProductWebClient productWebClient) {
+        this.productWebClient = productWebClient;
         this.products = new ArrayList<>();
         this.products.add(new Product("a", 1, "AD", "Stirnfg"));
     }
@@ -40,12 +43,18 @@ public class ProductService {
         return new Product("Error", 100, "Errorrrr", "Snlfsag");
     }
 
-    public Product updateExistingProduct(Product product) {
-        for(Product p : products){
-            if(p.getURL().equals(product.getURL())){
-                p.setPrice(product.getPrice());
-            }
+    public String updateExistingProduct(URL url) {
+
+        Product current = productWebClient.checkPriceScrape(url);
+        Product previous = productWebClient.checkPriceDatabase(url);
+
+        // Send Email if price is Decreased
+        if (previous.getPrice() > current.getPrice()) {
+            productWebClient.sendEmailPriceDrop(current);
+            return "Price Decreased";
         }
-        return product;
+
+        // Don't send email is price is same
+        return "Price is same";
     }
 }

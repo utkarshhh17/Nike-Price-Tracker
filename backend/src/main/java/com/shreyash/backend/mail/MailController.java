@@ -1,5 +1,6 @@
 package com.shreyash.backend.mail;
 
+import com.shreyash.backend.product.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,9 +16,9 @@ public class MailController {
         this.mailService = mailService;
     }
 
-    @PostMapping("/mail/send/{mailID}")
-    public String sendMail(@RequestBody MailStructure mailStructure, @PathVariable String mailID){
-        mailService.sendMail(mailID, mailStructure);
+    @PostMapping("/mail/send/")
+    public String sendMail(@RequestBody Product product){
+        mailService.sendMail(new MailStructure(product));
         return "Successful";
     }
 }
