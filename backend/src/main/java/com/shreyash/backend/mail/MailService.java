@@ -29,12 +29,12 @@ public class MailService {
         }
     }
 
-    public void sendMail(String mailID, MailStructure mailStructure){
+    public void sendMail(MailStructure mailStructure){
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setFrom(from);
         simpleMailMessage.setSubject(mailStructure.getSubject());
         simpleMailMessage.setText(mailStructure.getBody());
-        simpleMailMessage.setTo(mailID);
+        simpleMailMessage.setTo("singhshreyash0075@gmail.com");
         javaMailSender.send(simpleMailMessage);
     }
 }

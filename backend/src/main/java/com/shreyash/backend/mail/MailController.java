@@ -16,9 +16,9 @@ public class MailController {
         this.mailService = mailService;
     }
 
-    @PostMapping("/mail/send/{mailID}")
-    public String sendMail(@RequestBody Product product, @PathVariable String mailID){
-        mailService.sendMail(mailID, new MailStructure(product));
+    @PostMapping("/mail/send/")
+    public String sendMail(@RequestBody Product product){
+        mailService.sendMail(new MailStructure(product));
         return "Successful";
     }
 }
