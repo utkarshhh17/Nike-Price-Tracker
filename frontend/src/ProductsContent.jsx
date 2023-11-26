@@ -40,12 +40,10 @@ const [productsResponse,setProductsResponse]=useState(null);
     useEffect(() => {
        
 
-        axios.get("https://localhost:8081/api/products")
+        axios.get("http://localhost:8081/api/products",)
         .then((response) => {
             const confirmResponse=response.data;
             if(response.status === 200){
-                // JSON Product Object
-                console.log(confirmResponse);
                 setProductsResponse(confirmResponse);
             }
             else {
