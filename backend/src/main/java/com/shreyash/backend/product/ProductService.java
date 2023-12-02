@@ -15,6 +15,7 @@ public class ProductService {
         this.productWebClient = productWebClient;
         this.products = new ArrayList<>();
         this.products.add(new Product("Nike Full Force Low", 8496, "https://www.nike.com/in/t/full-force-low-shoes-w2MKmW/FB1362-100", "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto/04425b06-e340-44c4-92af-0d5aa87b7949/full-force-low-shoes-w2MKmW.png"));
+        this.products.add(new Product("Nike Full Force Low", 8496, "https://www.nike.com/in/t/full-force-low-shoes-w2MKmW/FB1362-100", "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto/04425b06-e340-44c4-92af-0d5aa87b7949/full-force-low-shoes-w2MKmW.png"));
     }
 
     public Product createNewProduct(Product product){

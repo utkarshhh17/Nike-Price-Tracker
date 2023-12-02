@@ -15,8 +15,6 @@ public class Product {
         this.imageurl = imageurl;
     }
 
-
-
     public String getImageURL() {
         return this.imageurl;
     }
