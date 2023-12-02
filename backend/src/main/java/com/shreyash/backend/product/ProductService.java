@@ -35,9 +35,10 @@ public class ProductService {
         }
     }
 
-    public Product getProduct(String productURL) {
+    public Product getProduct(String name, String id) {
+        final String finalURL = "https://www.nike.com/in/t/"+name+"/"+id;
         for(Product p : products){
-            if(p.getURL().equals(productURL)){
+            if((p.getURL()).equals(finalURL)){
                 return p;
             }
         }

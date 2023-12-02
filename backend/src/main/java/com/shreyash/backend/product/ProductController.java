@@ -21,9 +21,9 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
-    @GetMapping("/products/{productURL}")
-    public Product getProduct(@PathVariable String productURL){
-        return productService.getProduct(productURL);
+    @GetMapping("/products/t/{name}/{id}")
+    public Product getProduct(@PathVariable String name, @PathVariable String id){
+        return productService.getProduct(name, id);
     }
 
     @PostMapping("/products")
