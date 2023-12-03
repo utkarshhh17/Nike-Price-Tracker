@@ -5,7 +5,6 @@ function ProductPage() {
       <div className="flex flex-col">
       <Nav />
       <ProductsContent />
-  
       </div>
     );
   }
