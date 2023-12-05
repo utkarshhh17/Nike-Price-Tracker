@@ -61,7 +61,7 @@ const [checkResponse,setCheckResponse]=useState(null);
                 */
 
                 setCheckResponse(confirmResponse);
-                // console.log(confirmResponse);
+                console.log(confirmResponse);
                 setNumber(3);
             }
             else {
@@ -106,7 +106,7 @@ const [checkResponse,setCheckResponse]=useState(null);
                 </div>
             )}
 
-            {number === 2 && (
+            {number === 3 && (
                 <div className="flex flex-col justify-center items-center relative left-[5vw] h-[45vw] w-[90vw] bg-white">
                     <img src={checkResponse.imageURL} className=" left-[100rem] h-[30vw] w-[30vw]" alt={checkResponse.name}></img>
                     <div className="mt-2 text-3xl">{checkResponse.name}</div>
@@ -125,7 +125,7 @@ const [checkResponse,setCheckResponse]=useState(null);
 
 
 
-            {number === 3 && (
+            {number === 2 && (
                 <div className="flex flex-col justify-center items-center relative left-[5vw] h-[45vw] w-[90vw] bg-white">
                     <img src={selectedData.imageURL} className=" left-[100rem] h-[30vw] w-[30vw]" alt={selectedData.name}></img>
                     <div className="mt-2 text-3xl">{selectedData.name}</div>
