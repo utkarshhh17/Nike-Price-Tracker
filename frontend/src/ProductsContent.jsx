@@ -18,6 +18,7 @@ const [checkResponse,setCheckResponse]=useState(null);
             const confirmResponse=response.data;
             if(response.status === 200){
                 setProductsResponse(confirmResponse);
+                console.log(confirmResponse);
             }
             else {
                 console.error('Request failed');
@@ -35,9 +36,11 @@ const [checkResponse,setCheckResponse]=useState(null);
         setNumber(2);
       };
 
-      const handleCheck=()=>{
-          const name = "";
-          const id = "";
+      
+
+      const handleCheck=(propURL)=>{
+          const name = extractNameFromUrl(propURL);
+          const id = extractIdFromUrl(propURL);
           const url = `http://localhost:8081/api/products/t/${name}/${id}`
           // url example = https://www.nike.com/in/t/air-force-1-07-shoes-WrLlWX/CW2288-111
           // get the url of the product selected and
@@ -58,6 +61,8 @@ const [checkResponse,setCheckResponse]=useState(null);
                 */
 
                 setCheckResponse(confirmResponse);
+                // console.log(confirmResponse);
+                setNumber(3);
             }
             else {
                 console.error('Request failed');
@@ -67,6 +72,18 @@ const [checkResponse,setCheckResponse]=useState(null);
             console.error(error.response.data.error);
         })
 
+      }
+
+      function extractNameFromUrl(url) {
+        const urlParts = url.split('/');
+        const nameIndex = urlParts.indexOf('t') + 1;
+        return urlParts[nameIndex];
+      }
+      
+      function extractIdFromUrl(url) {
+        const urlParts = url.split('/');
+        const idIndex = urlParts.indexOf('t') + 2;
+        return urlParts[idIndex];
       }
 
 
@@ -91,6 +108,25 @@ const [checkResponse,setCheckResponse]=useState(null);
 
             {number === 2 && (
                 <div className="flex flex-col justify-center items-center relative left-[5vw] h-[45vw] w-[90vw] bg-white">
+                    <img src={checkResponse.imageURL} className=" left-[100rem] h-[30vw] w-[30vw]" alt={checkResponse.name}></img>
+                    <div className="mt-2 text-3xl">{checkResponse.name}</div>
+                    <div className="mt-2 text-xl font-roboto">Price: {checkResponse.price}</div>
+                    <motion.button
+                        type="submit"
+                        whileHover={{ backgroundColor: "#D4A7FB" }}
+                        transition={{ duration: 1, ease: "easeOut" }}
+                        className="mt-10 mb-7 w-20 h-10 text-white bg-black shadow-lg shadow-gray-400 hover:shadow-lg hover:scale-110"
+                        onClick={()=>handleCheck(checkResponse.url)}
+                    >
+                        Check
+                    </motion.button>
+                </div>
+            )}
+
+
+
+            {number === 3 && (
+                <div className="flex flex-col justify-center items-center relative left-[5vw] h-[45vw] w-[90vw] bg-white">
                     <img src={selectedData.imageURL} className=" left-[100rem] h-[30vw] w-[30vw]" alt={selectedData.name}></img>
                     <div className="mt-2 text-3xl">{selectedData.name}</div>
                     <div className="mt-2 text-xl font-roboto">Price: {selectedData.price}</div>
@@ -99,7 +135,7 @@ const [checkResponse,setCheckResponse]=useState(null);
                         whileHover={{ backgroundColor: "#D4A7FB" }}
                         transition={{ duration: 1, ease: "easeOut" }}
                         className="mt-10 mb-7 w-20 h-10 text-white bg-black shadow-lg shadow-gray-400 hover:shadow-lg hover:scale-110"
-                        onClick={handleCheck}
+                        onClick={()=>handleCheck(selectedData.url)}
                     >
                         Check
                     </motion.button>
