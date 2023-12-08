@@ -31,12 +31,6 @@ public class ProductController {
         return productService.createNewProduct(product);
     }
 
-    @PutMapping("/products")
-    public String updateProduct(@RequestBody URL url){
-        return productService.updateExistingProduct(url);
-    }
-
-
     @DeleteMapping("/products/{productURL}")
     public String deleteProduct(@PathVariable String productURL){
         try{
