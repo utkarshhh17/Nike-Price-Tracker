@@ -6,6 +6,7 @@ import com.shreyash.backend.product.Product;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Service;
 import javax.sql.DataSource;
+import java.util.List;
 
 @Service
 public class ProductDAOImpl implements ProductDAO{
@@ -20,6 +21,12 @@ public class ProductDAOImpl implements ProductDAO{
         System.out.println("Inserted " + row + " Product with name "+ product.getName());
     }
 
+    @Override
+    public List<Product> getProducts() {
+        String fetchQuery = "SELECT * FROM PRODUCT";
+        List<Product> products = jdbcTemplate.query(fetchQuery, new ProductRowMapper());
+        return products;
+    }
 
     public DataSource getDataSource(){
         return new DriverManagerDataSource(dotenv.get("DB_URL"), dotenv.get("DB_USER"), dotenv.get("DB_PASS"));
