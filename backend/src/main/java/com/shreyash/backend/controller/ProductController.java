@@ -1,6 +1,10 @@
-package com.shreyash.backend.product;
+package com.shreyash.backend.controller;
 
+import com.shreyash.backend.product.Product;
+import com.shreyash.backend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -27,17 +31,20 @@ public class ProductController {
     }
 
     @PostMapping("/products")
-    public Product newProduct(@RequestBody Product product){
-        return productService.createNewProduct(product);
+    public ResponseEntity<String> newProduct(@RequestBody Product product){
+        if(productService.createNewProduct(product)){
+            return new ResponseEntity<>("Product Added", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Error Occurred", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @DeleteMapping("/products/{productURL}")
-    public String deleteProduct(@PathVariable String productURL){
-        try{
-            productService.removeProduct(productURL);
-            return "Successfully Deleted";
-        } catch (Exception c){
-            return c.toString();
+    public ResponseEntity<String> deleteProduct(@PathVariable String productURL){
+        if(productService.removeProduct(productURL)){
+            return new ResponseEntity<>("Product Deleted", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Error Occurred", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
