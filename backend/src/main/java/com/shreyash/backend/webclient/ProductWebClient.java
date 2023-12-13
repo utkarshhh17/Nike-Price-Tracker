@@ -1,4 +1,7 @@
-package com.shreyash.backend.product;
+package com.shreyash.backend.webclient;
+import com.shreyash.backend.dao.ProductDAOImpl;
+import com.shreyash.backend.product.Product;
+import com.shreyash.backend.product.URL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -6,17 +9,15 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.List;
-
 
 @Service
 public class ProductWebClient {
-    private Data data;
+
+    private ProductDAOImpl productDAO;
 
     @Autowired
-    public ProductWebClient(Data data) {
-        this.data = data;
+    public ProductWebClient(ProductDAOImpl productDAO) {
+        this.productDAO = productDAO;
     }
 
     public Product checkPriceScrape(String url){
@@ -32,12 +33,7 @@ public class ProductWebClient {
     }
 
     public Product checkPriceDatabase(String url){
-        for(Product p : data.getProducts()){
-            if(p.getURL().equals(url)){
-                return p;
-            }
-        }
-        return null;
+        return productDAO.getProduct(url);
     }
 
     public String sendEmailPriceDrop(Product product){
