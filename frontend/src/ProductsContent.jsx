@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import Loader from "./Pages/Loader";
 export default function ProductsContent(){
 
 const [productsResponse,setProductsResponse]=useState(null);
@@ -38,7 +39,7 @@ const [checkResponse,setCheckResponse]=useState(null);
 
       
 
-      const handleCheck=(propURL)=>{
+      const handleCheck=async (propURL)=>{
           const name = extractNameFromUrl(propURL);
           const id = extractIdFromUrl(propURL);
           const url = `http://localhost:8081/api/products/t/${name}/${id}`
@@ -47,10 +48,11 @@ const [checkResponse,setCheckResponse]=useState(null);
           // extract name = air-force-1-07-shoes-WrLlWX
           // extract id = CW2288-111
           // pass it to the url variable
-        axios.get(url)
-        .then((response) => {
-            const confirmResponse=response.data;
-            if(response.status === 200) {
+        setNumber(4);
+        const response = await axios.post('http://localhost:8000/api/data', url);
+        // .then((response) => {
+        //     const confirmResponse=response.data;
+        if(response.status === 200) {
                 /* new data is recieved with updated price (same or different) in json in format
                 {name: ,
                 price: ,
@@ -59,18 +61,18 @@ const [checkResponse,setCheckResponse]=useState(null);
 
                 set that new data on that product
                 */
-
-                setCheckResponse(confirmResponse);
-                console.log(confirmResponse);
-                setNumber(3);
-            }
-            else {
-                console.error('Request failed');
-            }
-        })
-        .catch((error)=>{
-            console.error(error.response.data.error);
-        })
+            const confirmResponse=response.data;    
+            setCheckResponse(confirmResponse);
+            console.log(confirmResponse);
+            setNumber(3);
+        }
+        else {
+            console.error('Request failed');
+        }
+        // })
+        // .catch((error)=>{
+        //     console.error(error.response.data.error);
+        // })
 
       }
 
@@ -141,6 +143,11 @@ const [checkResponse,setCheckResponse]=useState(null);
                     </motion.button>
                 </div>
             )}
+            {number===4 && 
+            <motion.div initial={{opacity:0}} animate={{opacity:1,transition:{duration:0.2}}}>
+            <Loader />
+            </motion.div>
+        }
         </div>
     );
 }
