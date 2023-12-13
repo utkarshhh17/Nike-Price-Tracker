@@ -4,6 +4,8 @@ import com.shreyash.backend.product.Product;
 import java.util.List;
 
 public interface ProductDAO {
-    void insert(Product product);
+    boolean insertProduct(Product product);
+    Product getProduct(String URL);
     List<Product> getProducts();
+    boolean removeProduct(String productURL);
 }

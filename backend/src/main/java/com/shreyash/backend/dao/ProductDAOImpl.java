@@ -14,11 +14,24 @@ public class ProductDAOImpl implements ProductDAO{
     private JdbcTemplate jdbcTemplate = new JdbcTemplate(getDataSource());
 
     @Override
-    public void insert(Product product) {
-        String insertQuery = "INSERT INTO PRODUCT VALUES (?,?,?,?)";
-        Object[] args = {product.getURL(), product.getName(), product.getPrice(), product.getImageURL()};
-        int row = jdbcTemplate.update(insertQuery, args);
-        System.out.println("Inserted " + row + " Product with name "+ product.getName());
+    public boolean insertProduct(Product product) {
+        try{
+            String insertQuery = "INSERT INTO PRODUCT VALUES (?,?,?,?)";
+            Object[] args = {product.getURL(), product.getName(), product.getPrice(), product.getImageURL()};
+            jdbcTemplate.update(insertQuery, args);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public Product getProduct(String URL) {
+        String fetchQuery = "SELECT * FROM PRODUCT WHERE URL = ?";
+        Object[] args = {URL};
+        Product product =  jdbcTemplate.queryForObject(fetchQuery, args, new ProductRowMapper());
+        return product;
     }
 
     @Override
@@ -26,6 +39,19 @@ public class ProductDAOImpl implements ProductDAO{
         String fetchQuery = "SELECT * FROM PRODUCT";
         List<Product> products = jdbcTemplate.query(fetchQuery, new ProductRowMapper());
         return products;
+    }
+
+    @Override
+    public boolean removeProduct(String productURL) {
+        try{
+            String query = "DELETE FROM PRODUCT WHERE URL=?";
+            Object[] args = {productURL};
+            jdbcTemplate.update(query, args);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public DataSource getDataSource(){
