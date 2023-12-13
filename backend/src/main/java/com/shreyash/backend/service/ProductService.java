@@ -1,9 +1,10 @@
-package com.shreyash.backend.product;
+package com.shreyash.backend.service;
 import com.shreyash.backend.dao.ProductDAOImpl;
+import com.shreyash.backend.product.Product;
+import com.shreyash.backend.webclient.ProductWebClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -12,38 +13,33 @@ public class ProductService {
     private ProductDAOImpl productDAO;
 
     @Autowired
-    public ProductService(ProductWebClient productWebClient, Data data, ProductDAOImpl productDAO) {
+    public ProductService(ProductWebClient productWebClient, ProductDAOImpl productDAO) {
         this.productWebClient = productWebClient;
         this.productDAO = productDAO;
     }
 
-    public Product createNewProduct(Product product){
-        try {
-            productDAO.insert(product);
-            return product;
-        }catch (Exception e){
-            System.out.println(e);
-            return null;
-        }
+    public boolean createNewProduct(Product product){
+        return productDAO.insertProduct(product);
     }
 
     public List<Product> getAllProducts() {
         return productDAO.getProducts();
     }
 
-    public void removeProduct(String productURL) {
-
+    public boolean removeProduct(String productURL) {
+        productDAO.removeProduct(productURL);
+        return true;
     }
 
     public Product getProduct(String name, String id) {
         final String finalURL = "https://www.nike.com/in/t/"+name+"/"+id;
-        return  null;
+        return sendEmailIfDecreased(finalURL);
     }
 
-    public Product sendEmailIfDecreased(Product product) {
+    public Product sendEmailIfDecreased(String url) {
 
-        Product current = productWebClient.checkPriceScrape(product.getURL());
-        Product previous = productWebClient.checkPriceDatabase(product.getURL());
+        Product current = productWebClient.checkPriceScrape(url);
+        Product previous = productWebClient.checkPriceDatabase(url);
 
         // Send Email if price is Decreased
         if (previous.getPrice() > current.getPrice()) {
